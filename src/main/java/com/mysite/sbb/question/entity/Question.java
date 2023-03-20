@@ -16,7 +16,7 @@ import java.util.List;
 public class Question {
     // 엔티티 클래스
     @Id // id속성을 기본 키로 지정해주는 애너테이션
-    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동으로 값 증가
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // 자동으로 값 증가 auto_increment 속성
     private Integer id;
 
     @Column(length = 200)
