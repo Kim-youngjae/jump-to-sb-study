@@ -22,6 +22,11 @@ public class MainController {
         return "index실행";
     }
 
+    @GetMapping("/") // http://localhost:8080/ -> 루트 주소
+    public String root() {
+        return "redirect:/question/list"; //다시 질문 리스트로 리다이렉트하라는 의미 (redirect:/)
+    }
+
     @GetMapping("/question/list")
 //    @ResponseBody
     public String list(Model model) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
