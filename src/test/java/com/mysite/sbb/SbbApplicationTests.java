@@ -1,8 +1,10 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
+import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -106,9 +108,43 @@ class SbbApplicationTests {
 		assertEquals(1, this.questionRepository.count()); // 삭제하고 행이 2개에서 1개로 변경되었는지 확인
 	}
 
+
+	// Answer 엔티티에 대한 데이터 처리
 	@Test
 	@DisplayName("답변 데이터 생성 후 저장하기")
 	void testJpa9() {
+		Optional<Question> oq = this.questionRepository.findById(2);
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+
+		Answer a = new Answer();
+		a.setContent("네 자동으로 생성됩니다.");
+		a.setQuestion(q);  // 어떤 질문의 답변인지 알기위해서 Question 객체가 필요하다.
+		a.setCreateDate(LocalDateTime.now());
+		this.answerRepository.save(a);
+	}
+
+	@Test
+	@DisplayName("답변에 연결된 질문 찾기")
+	void testJpa10() {
+		Optional<Answer> oa = this.answerRepository.findById(1); // 1번 답변을 찾아서
+		assertTrue(oa.isPresent()); // 답변이 존재하면
+		Answer a = oa.get();
+		assertEquals(2, a.getQuestion().getId()); //가져온 답변에 연결된 질문의 id가 2번인지 확인
+	}
+
+	@Test
+	@Transactional
+	@DisplayName("질문에 달린 답변 찾기")
+	void testJpa11() {
+		Optional<Question> oq = this.questionRepository.findById(2); //2번 질문을 가져온다
+		assertTrue(oq.isPresent());
+		Question q = oq.get();
+
+		List<Answer> answerList = q.getAnswerList(); // 가져온 질문의 답변 리스트를 가져옴
+
+		assertEquals(1, answerList.size()); // 답변 리스트의 크기가 1인지 체크
+		assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent()); // 0번 질문이 일치하는지 체크
+	}
 
 	}
-}
