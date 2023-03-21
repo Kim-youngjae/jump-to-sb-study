@@ -1,5 +1,6 @@
 package com.mysite.sbb;
 
+import com.mysite.sbb.answer.service.QuestionService;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
 import lombok.RequiredArgsConstructor;
@@ -14,7 +15,7 @@ import java.util.List;
 @Controller // MainController클래스는 스프링부트의 컨트롤러로 지정한다는 의미
 public class MainController {
 
-    private final QuestionRepository questionRepository;
+    private final QuestionService questionService;
 
     @GetMapping("/sbb")
     @ResponseBody
@@ -30,7 +31,7 @@ public class MainController {
     @GetMapping("/question/list")
 //    @ResponseBody
     public String list(Model model) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
-        List<Question> questionList = this.questionRepository.findAll();
+        List<Question> questionList = this.questionService.getList();
         model.addAttribute("questionList", questionList);
         return "question_list";
     }
