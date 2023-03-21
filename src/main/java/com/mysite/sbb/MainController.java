@@ -1,11 +1,6 @@
 package com.mysite.sbb;
 
-import com.mysite.sbb.answer.service.QuestionService;
-import com.mysite.sbb.question.entity.Question;
-import com.mysite.sbb.question.repository.QuestionRepository;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
