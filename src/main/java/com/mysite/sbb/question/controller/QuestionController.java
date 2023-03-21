@@ -5,11 +5,11 @@ import com.mysite.sbb.question.entity.Question;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
+import java.time.LocalDateTime;
 import java.util.List;
+
 @RequestMapping("/question") // url prefix
 @Controller
 @RequiredArgsConstructor //final이 붙은 속성을 포함하는 생성자를 자동으로 생성하는 역할을 한다.
@@ -29,5 +29,17 @@ public class QuestionController {
         Question question = this.questionService.getQuestion(id);
         model.addAttribute("question", question);
         return "question_detail";
+    }
+
+    @GetMapping("/create")
+    public String questionCreate() {
+        return "question_form";
+    }
+
+    // 질문 등록하기 버튼을 눌렸을 때에 등록하는 요청을 보낼 메서드
+    @PostMapping("/create")
+    public String questionCreate(@RequestParam String subject, @RequestParam String content) {
+        this.questionService.create(subject, content);
+        return "redirect:/question/list";
     }
 }
