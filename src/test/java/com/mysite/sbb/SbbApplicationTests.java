@@ -4,6 +4,7 @@ import com.mysite.sbb.answer.entity.Answer;
 import com.mysite.sbb.answer.repository.AnswerRepository;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
+import com.mysite.sbb.question.service.QuestionService;
 import jakarta.transaction.Transactional;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.MethodOrderer;
@@ -26,6 +27,9 @@ class SbbApplicationTests {
 	private QuestionRepository questionRepository;
 	@Autowired
 	private AnswerRepository answerRepository;
+
+	@Autowired
+	private QuestionService questionService;
 
 	@Test
 	@DisplayName("DB에 데이터 추가")
@@ -150,4 +154,15 @@ class SbbApplicationTests {
 		assertEquals(1, answerList.size()); // 답변 리스트의 크기가 1인지 체크
 		assertEquals("네 자동으로 생성됩니다.", answerList.get(0).getContent()); // 0번 질문이 일치하는지 체크
 	}
+
+	@Test
+	@DisplayName("대용량 데이터 만들기")
+	void testJpa_12() {
+		for (int i = 0; i <= 300; i++) {
+			String subject = String.format("테스트 데이터 입니다: [%d]", i);
+			String content = "내용 없음";
+			this.questionService.create(subject, content);
+
+		}
 	}
+}

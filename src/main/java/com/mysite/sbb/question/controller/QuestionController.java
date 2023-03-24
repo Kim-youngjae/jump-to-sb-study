@@ -6,6 +6,7 @@ import com.mysite.sbb.question.service.QuestionService;
 import com.mysite.sbb.question.entity.Question;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -21,9 +22,9 @@ public class QuestionController {
 
     @GetMapping("/list")
 //    @ResponseBody
-    public String list(Model model) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
-        List<Question> questionList = this.questionService.getList();
-        model.addAttribute("questionList", questionList);
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
+        Page<Question> paging = this.questionService.getList(page);
+        model.addAttribute("paging", paging);
         return "question_list";
     }
 
@@ -52,4 +53,5 @@ public class QuestionController {
         this.questionService.create(questionForm.getSubject(), questionForm.getContent());
         return "redirect:/question/list";
     }
+
 }
