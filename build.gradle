@@ -37,6 +37,11 @@ dependencies {
 	// "Spring Boot Validation"을 설치하면 다음과 같은 애너테이션들을 사용하여 입력 값을 검증할 수 있다.
 	implementation 'org.springframework.boot:spring-boot-starter-validation'
 
+	// spring-security
+	implementation 'org.springframework.boot:spring-boot-starter-security'
+	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.1.RELEASE'
+
+
 }
 
 tasks.named('test') {
