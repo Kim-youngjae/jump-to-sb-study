@@ -39,7 +39,7 @@ public class QuestionService {
         question.setContent(content);
         question.setCreateDate(LocalDateTime.now());
         question.setAuthor(user);
-        
+
         this.questionRepository.save(question); // 생성한 질문을 리포지터리에 저장 요청
     }
 
@@ -50,5 +50,16 @@ public class QuestionService {
 
         Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 10개씩 객체를 반환 하는 것 같음
         return this.questionRepository.findAll(pageable);
+    }
+
+    public void modify(Question question, String subject, String content) {
+        question.setSubject(subject);
+        question.setContent(content);
+        question.setModifyDate(LocalDateTime.now());
+        this.questionRepository.save(question);
+    }
+
+    public void delete(Question question) {
+        this.questionRepository.delete(question);
     }
 }
