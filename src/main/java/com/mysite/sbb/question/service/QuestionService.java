@@ -3,6 +3,7 @@ package com.mysite.sbb.question.service;
 import com.mysite.sbb.DataNotFoundException;
 import com.mysite.sbb.question.entity.Question;
 import com.mysite.sbb.question.repository.QuestionRepository;
+import com.mysite.sbb.user.entity.SiteUser;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -32,11 +33,13 @@ public class QuestionService {
         }
     }
 
-    public void create(String subject, String content) {
+    public void create(String subject, String content, SiteUser user) {
         Question question = new Question(); // 새 질문을 저장할 객체
         question.setSubject(subject);
         question.setContent(content);
         question.setCreateDate(LocalDateTime.now());
+        question.setAuthor(user);
+        
         this.questionRepository.save(question); // 생성한 질문을 리포지터리에 저장 요청
     }
 
