@@ -9,6 +9,7 @@ import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.LocalDateTime;
 import java.util.List;
+import java.util.Set;
 
 @Getter
 @Setter
@@ -37,4 +38,7 @@ public class Question {
     private SiteUser author;
 
     private LocalDateTime modifyDate;
+
+    @ManyToMany // 하나의 질문에 여러사람이 추천가능, 한 사람이 여러개의 질문 추천가능
+    Set<SiteUser> voter;
 }
