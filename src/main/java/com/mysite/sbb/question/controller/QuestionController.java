@@ -29,9 +29,11 @@ public class QuestionController {
 
     @GetMapping("/list")
 //    @ResponseBody
-    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
-        Page<Question> paging = this.questionService.getList(page);
+    public String list(Model model, @RequestParam(value = "page", defaultValue = "0") int page,
+                       @RequestParam(value = "kw", defaultValue = "") String kw) { // 모델 클래스를 활용해서 템플릿으로 전달할 수 있다.
+        Page<Question> paging = this.questionService.getList(page, kw);
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
         return "question_list";
     }
 
